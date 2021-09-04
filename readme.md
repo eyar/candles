@@ -2,6 +2,8 @@
 
 ## Build and run the project:
 
+Clone the repository
+
 Run ```npm install``` from server and client folders
 
 Run ```npm run start``` from server folder then from client folder
