@@ -14,7 +14,7 @@ Open http://localhost:3000 in a browser
 
 ## What would you do if you had more time?
 - Add more visuals
-- Add redux
+- Add Redux
 
 ## What features do you propose to add?
 - Upgrade chart with volume
