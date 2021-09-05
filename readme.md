@@ -8,11 +8,13 @@ Run ```npm install``` from server and client folders
 
 Run ```npm run start``` from server folder then from client folder
 
+(MongoDB is already running on Atlas)
+
 Open http://localhost:3000 in a browser
 
 ## What would you do if you had more time?
 - Add more visuals
-- Add redux
+- Add Redux
 
 ## What features do you propose to add?
 - Upgrade chart with volume
