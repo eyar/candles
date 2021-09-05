@@ -15,6 +15,7 @@ Open http://localhost:3000 in a browser
 ## What would you do if you had more time?
 - Add more visuals
 - Add Redux
+- Add ESLint and Prettier
 
 ## What features do you propose to add?
 - Upgrade chart with volume
