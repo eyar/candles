@@ -9,7 +9,7 @@ export function CandleChart({data, ticker}: { data: Array<Array<string | number>
 
     const lastCandle = [date, Math.floor(low), Math.floor(open), price && Math.floor(price), Math.floor(high)]
 
-    const candlesWithUpdatedPrice = [...data.slice(0,data.length - 2), lastCandle]
+    const candlesWithUpdatedPrice = [...data.slice(0,data.length - 1), lastCandle]
 
     return (
         <Chart

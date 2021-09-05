@@ -18,16 +18,14 @@ export const averageObjects = (a: any, b: any) => {
   return c;
 }
 
-export const writeMonthlyData = async () => {
-  const monthlyData = await getMonthlyData()
-
+export const writeToDB = async (monthlyData: ILast[]) => {
   monthlyData.reverse()
 
   try {
     const result = await collections.candles?.insertMany(monthlyData)
     console.log(result)
   } catch (err) {
-    console.log("Error writing to DB, you're probably trying to write to existing time frames")
+    console.log("Error writing to DB, you're probably trying to overwrite existing candles")
   }
 }
 
@@ -51,7 +49,7 @@ export const calcAverage = () => {
     console.log(err)
   }
 
-  console.log({averageLast})
+  console.log({ averageLast })
 
   return averageLast
 }

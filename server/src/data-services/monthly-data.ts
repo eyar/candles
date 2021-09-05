@@ -42,7 +42,6 @@ const binanceMonthly = async () => {
   return monthly
 }
 
-
 export const getMonthlyData = async () => {
   const settled = await Promise.all([
     coinbaseMonthly(),

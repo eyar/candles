@@ -1,7 +1,8 @@
 import express from 'express';
 import { Server } from 'ws'
-import { calcAverage, sendMonthlyData, writeMonthlyData } from './utils';
+import { calcAverage, sendMonthlyData, writeToDB } from './utils';
 import { binanceDaily, binanceWSConnection, coinbaseDaily, coinbaseWSConnection } from './data-services/real-time-data';
+import {getMonthlyData} from "./data-services/monthly-data";
 
 
 export const startWSServer = () => {
@@ -13,9 +14,10 @@ export const startWSServer = () => {
 
   wss.on('connection', async (ws) => {
     console.log('Client connected')
-    console.log(wss.clients.size)
 
-    writeMonthlyData()
+    const monthlyData = await getMonthlyData()
+
+    writeToDB(monthlyData)
 
     sendMonthlyData(ws)
 

@@ -56,13 +56,13 @@ export const coinbaseDaily = () => {
 }
 
 export const binanceDaily = () => {
-  const url = 'wss://stream.binance.com:9443/ws/btcusdt@miniTicker'
+  const url = 'wss://stream.binance.com:9443/ws/btcusdt@kline_1d'
 
   binanceWSConnection = new WebSocket(url)
 
   if(binanceWSConnection) {
-    binanceWSConnection.onmessage = ({ data }: { data: string} ) => {
-      const {c, o, h, l} = JSON.parse(data)
+    binanceWSConnection.onmessage = async ({ data }: { data: string} ) => {
+      const { k: { c, o, h, l }} = JSON.parse(data)
 
       binanceLast.price = +c
       binanceLast.open = +o
