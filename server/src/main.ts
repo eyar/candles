@@ -1,13 +1,15 @@
-import { connectToDatabase } from './database.service';
-import { writeToDB } from './utils';
-import { startWSServer } from './websocket-server';
+import { connectToDatabase } from './data-services/database.service';
+import {setCandlesData, startWSServer} from './websocket-server';
 import {getMonthlyData} from "./data-services/monthly-data";
+import {writeCandlesToDB} from "./data-services/data-utils";
 
 connectToDatabase()
   .then( async () => {
-      const monthlyData = await getMonthlyData()
+      const fetchedMonthlyData = await getMonthlyData()
 
-      writeToDB(monthlyData)
+      setCandlesData(fetchedMonthlyData)
+
+      writeCandlesToDB()
   })
   .catch((error: Error) => {
     console.error("Database connection failed", error)

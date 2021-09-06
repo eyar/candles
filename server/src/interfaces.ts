@@ -5,6 +5,7 @@ export interface ILast {
   open: string | number
   close?: string | number
   price?: number
+  updated?: Date
 }
 
 export interface IMonth {

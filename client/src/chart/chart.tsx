@@ -11,8 +11,10 @@ export function CandleChart({data, ticker}: { data: Array<Array<string | number>
 
     const candlesWithUpdatedPrice = [...data.slice(0,data.length - 1), lastCandle]
 
+    const doRender = lastCandle.filter(Boolean).length
+
     return (
-        <Chart
+        doRender ? <Chart
             width={'100%'}
             height={700}
             chartType="CandlestickChart"
@@ -27,6 +29,6 @@ export function CandleChart({data, ticker}: { data: Array<Array<string | number>
                 },
             }}
             rootProps={{ 'data-testid': '2' }}
-        />
+        /> : null
     )
 }

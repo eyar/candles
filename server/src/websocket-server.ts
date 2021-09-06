@@ -1,9 +1,23 @@
 import express from 'express';
-import { Server } from 'ws'
-import { calcAverage, sendMonthlyData, writeToDB } from './utils';
-import { binanceDaily, binanceWSConnection, coinbaseDaily, coinbaseWSConnection } from './data-services/real-time-data';
+import WebSocket, { Server } from 'ws'
+import { calcAverage } from './utils';
+import {
+  binanceRealTime,
+  binanceWSConnection,
+  coinbaseRealTime,
+  coinbaseWSConnection
+} from './data-services/real-time-data';
 import {getMonthlyData} from "./data-services/monthly-data";
+import {ILast} from "./interfaces";
+import {sendCandlesData, writeCandlesToDB} from "./data-services/data-utils";
 
+export let webSocket: WebSocket
+
+export let monthlyData: ILast[]
+
+export const setCandlesData = (newMonthlyData: ILast[]) => {
+  monthlyData = newMonthlyData
+}
 
 export const startWSServer = () => {
   const PORT = 4000
@@ -15,14 +29,18 @@ export const startWSServer = () => {
   wss.on('connection', async (ws) => {
     console.log('Client connected')
 
-    const monthlyData = await getMonthlyData()
+    webSocket = ws
 
-    writeToDB(monthlyData)
+    const fetchedMonthlyData = await getMonthlyData()
 
-    sendMonthlyData(ws)
+    setCandlesData(fetchedMonthlyData)
 
-    coinbaseDaily()
-    binanceDaily()
+    writeCandlesToDB()
+
+    sendCandlesData()
+
+    coinbaseRealTime()
+    binanceRealTime()
 
     ws.on('close', () => {
       console.log('Client disconnected');

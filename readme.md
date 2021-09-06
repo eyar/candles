@@ -23,3 +23,4 @@ Open http://localhost:3000 in a browser
 - Add more timeframes
 - Add chart with technical analysis options
 - Add more pairs
+- Add tests

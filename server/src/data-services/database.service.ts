@@ -11,7 +11,7 @@ export async function connectToDatabase () {
 
   const candlesCollection: Collection = db.collection('candles')
 
-  await candlesCollection.createIndex({ time: 1 }, { sparse: true, unique: true })
+  await candlesCollection.createIndex({ time: 1 }, { unique: true })
 
   collections.candles = candlesCollection
 
