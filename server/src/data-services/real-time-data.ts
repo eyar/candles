@@ -1,5 +1,6 @@
 import { ILast } from '../interfaces';
 import {getAndSendCandles} from "./data-utils";
+import {monthlyData} from "../websocket-server";
 const WebSocket = require('ws');
 
 export const binanceLast = {} as ILast
@@ -7,8 +8,6 @@ export const coinbaseLast = {} as ILast
 
 export let binanceWSConnection: WebSocket
 export let coinbaseWSConnection: WebSocket
-
-let lastOpenTime = ''
 
 export const coinbaseRealTime = () => {
   const url = `wss://ws-feed.pro.coinbase.com`
@@ -67,10 +66,10 @@ export const binanceRealTime = () => {
     binanceWSConnection.onmessage = async ({ data }: { data: string} ) => {
       const { k: { t, c, o, h, l }} = JSON.parse(data)
 
-      if(t !== '' && t !== lastOpenTime) {
-        lastOpenTime = t
-        getAndSendCandles()
-      }
+      let lastCandleOpenTime: any = monthlyData[monthlyData.length - 1].time
+      lastCandleOpenTime = lastCandleOpenTime instanceof Date && lastCandleOpenTime.toISOString()
+
+      if(t !== '' && t !== lastCandleOpenTime) getAndSendCandles()
 
       binanceLast.price = +c
       binanceLast.open = +o

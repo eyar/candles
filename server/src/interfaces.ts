@@ -1,5 +1,5 @@
 export interface ILast {
-  time?: string
+  time?: string | Date
   low: string | number
   high: string | number
   open: string | number
