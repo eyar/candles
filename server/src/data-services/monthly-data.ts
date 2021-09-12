@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { IMonth } from '../interfaces';
-import { averageObjects } from '../utils';
+import { averageObjects, setAverageLast } from '../calc-utils';
 
 const coinbaseMonthly = async () => {
   const start = new Date()
@@ -56,5 +56,11 @@ export const getMonthlyData = async () => {
     if(coinbaseResults && key in coinbaseResults) averages[key] = averageObjects(coinbaseResults[key], binanceResults[key])
   }
 
-  return Object.values(averages);
+  const values = Object.values(averages)
+
+  const lastCandle = values[values.length - 1]
+
+  setAverageLast(lastCandle)
+
+  return values;
 }

@@ -67,7 +67,7 @@ export const binanceRealTime = () => {
       const { k: { t, c, o, h, l }} = JSON.parse(data)
 
       const lastCandleOpenTimeDate = monthlyData[monthlyData.length - 1].time
-      const lastCandleOpenTime = lastCandleOpenTimeDate instanceof Date && lastCandleOpenTimeDate.toISOString()
+      const lastCandleOpenTime = lastCandleOpenTimeDate instanceof Date && lastCandleOpenTimeDate.getTime()
 
       if(t !== '' && t !== lastCandleOpenTime) getAndSendCandles()
 

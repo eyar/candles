@@ -9,12 +9,10 @@ export function CandleChart({data, ticker}: { data: Array<Array<string | number>
 
     const lastCandle = [date, Math.floor(low), Math.floor(open), price && Math.floor(price), Math.floor(high)]
 
-    const candlesWithUpdatedPrice = [...data.slice(0,data.length - 1), lastCandle]
-
-    const doRender = lastCandle.filter(Boolean).length
+    const candlesWithUpdatedPrice = date ? [...data.slice(0,data.length - 1), lastCandle] : data
 
     return (
-        doRender ? <Chart
+        date ? <Chart
             width={'100%'}
             height={700}
             chartType="CandlestickChart"

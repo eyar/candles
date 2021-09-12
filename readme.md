@@ -13,6 +13,7 @@ Run ```npm run start``` from server folder then from client folder
 Open http://localhost:3000 in a browser
 
 ## What would you do if you had more time?
+- Modify day change mechanism to be initiated at the client 
 - Add more visuals
 - Add Redux
 - Add ESLint and Prettier

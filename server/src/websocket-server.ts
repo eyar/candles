@@ -1,6 +1,6 @@
 import express from 'express';
 import WebSocket, { Server } from 'ws'
-import { calcAverage } from './utils';
+import { calcAverage } from './calc-utils';
 import {
   binanceRealTime,
   binanceWSConnection,
@@ -56,6 +56,8 @@ export const startWSServer = () => {
     if(wss.clients.size === 0) return
 
     const averageLast = calcAverage()
+
+    console.log({averageLast})
 
     wss.clients.forEach( (client) => {
       client.send(JSON.stringify({ averageLast }))
