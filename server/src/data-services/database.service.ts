@@ -1,4 +1,7 @@
 import { MongoClient, Db, Collection, ObjectId } from 'mongodb'
+import {getMonthlyData} from "./monthly-data";
+import {setCandlesData} from "../websocket-server";
+import {writeCandlesToDB} from "./data-utils";
 
 export const collections: { candles?: Collection } = {}
 
@@ -16,4 +19,19 @@ export async function connectToDatabase () {
   collections.candles = candlesCollection
 
   console.log(`Successfully connected to database: ${db.databaseName} and collection: ${candlesCollection.collectionName}`)
+}
+
+export async function connectToDbAndWriteData() {
+  try {
+    await connectToDatabase()
+  } catch (error) {
+    console.error("Database connection failed", error)
+    process.exit()
+  }
+
+  const fetchedMonthlyData = await getMonthlyData()
+
+  setCandlesData(fetchedMonthlyData)
+
+  writeCandlesToDB()
 }

@@ -1,5 +1,3 @@
-export {}
-
 export interface ICandle {
     time: string
     low: number

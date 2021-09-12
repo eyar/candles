@@ -66,8 +66,8 @@ export const binanceRealTime = () => {
     binanceWSConnection.onmessage = async ({ data }: { data: string} ) => {
       const { k: { t, c, o, h, l }} = JSON.parse(data)
 
-      let lastCandleOpenTime: any = monthlyData[monthlyData.length - 1].time
-      lastCandleOpenTime = lastCandleOpenTime instanceof Date && lastCandleOpenTime.toISOString()
+      const lastCandleOpenTimeDate = monthlyData[monthlyData.length - 1].time
+      const lastCandleOpenTime = lastCandleOpenTimeDate instanceof Date && lastCandleOpenTimeDate.toISOString()
 
       if(t !== '' && t !== lastCandleOpenTime) getAndSendCandles()
 

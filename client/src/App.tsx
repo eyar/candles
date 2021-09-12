@@ -1,31 +1,11 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React from 'react';
 import logo from './prycto-logo.png';
 import './App.css';
-import {ICandle, prepareCandles} from "./chart/prepareCandles";
 import {CandleChart} from "./chart/chart";
-
-const url = 'ws://localhost:4000'
+import {useWebsokcet} from "./websocketHook";
 
 function App() {
-  const [chartReadyCandles, setChartReadyCandles] = useState([[]] as Array<Array<string | number>>)
-  const [ticker, setTicker] = useState({} as ICandle)
-
-  const webSocket = useRef<WebSocket | null>(null);
-
-  useEffect(() => {
-    webSocket.current = new WebSocket(url)
-
-    webSocket.current.onmessage = function ({ data }) {
-      const { candles, averageLast } = JSON.parse(data)
-
-      if(averageLast) setTicker(averageLast)
-
-      if(candles){
-        const preparedCandles = prepareCandles(candles)
-        setChartReadyCandles(preparedCandles)
-      }
-    }
-  },[])
+  const {chartReadyCandles, ticker} = useWebsokcet()
 
   return (
     <div className="App">
